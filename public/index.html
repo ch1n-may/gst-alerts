@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GST/TDS Alerts - Never Miss Deadlines</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            max-width: 450px;
+            width: 100%;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .alert-box {
+            background: #fff3cd;
+            border-left: 4px solid #ff9800;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 4px;
+        }
+        .alert-box strong {
+            color: #d32f2f;
+            display: block;
+            margin-bottom: 5px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #5568d3;
+        }
+        #message {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            display: none;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚨 GST/TDS Alert System</h1>
+        <p class="subtitle">Free compliance reminders for Indian MSMEs</p>
+        
+        <div class="alert-box">
+            <strong>⚠️ Upcoming Deadline:</strong>
+            Dec 20: GSTR-3B filing (₹50k penalty if missed)
+        </div>
+
+        <form id="signupForm">
+            <label for="email">📧 Your Email</label>
+            <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                placeholder="owner@factory.com" 
+                required
+            >
+
+            <label for="business_type">🏭 Business Type</label>
+            <select id="business_type" name="business_type" required>
+                <option value="">-- Select Type --</option>
+                <option value="Factory">Factory (Manufacturing)</option>
+                <option value="Retail">Retail (Shop/Store)</option>
+            </select>
+
+            <button type="submit">Start Free Alerts →</button>
+        </form>
+
+        <div id="message"></div>
+    </div>
+
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const business_type = document.getElementById('business_type').value;
+            
+            // Send to server
+            const response = await fetch('/signup', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, business_type })
+            });
+            
+            const data = await response.json();
+            
+            // Show success message
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = '✅ Signed up! Check your terminal for the log.';
+            messageDiv.className = 'success';
+            messageDiv.style.display = 'block';
+            
+            // Clear form
+            document.getElementById('signupForm').reset();
+        });
+    </script>
+</body>
+</html>
+```
+
+**Save file: Ctrl+S / Cmd+S**
+
+---
+
+### 4️⃣ CHECK YOUR FOLDER STRUCTURE (30 seconds)
+
+**Your VS Code left sidebar should look like:**
+```
+gst-alerts/
+├── node_modules/
+├── public/
+│   └── index.html    ← You just made this
+├── package.json
+├── package-lock.json
+└── server.js
